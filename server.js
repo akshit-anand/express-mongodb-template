@@ -1,8 +1,8 @@
-import express from "express";
-import cors from "cors";
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
 const port = process.env.PORT || 8000;
-import dotenv from "dotenv";
-import todoRoutes from "./routes/routes.js";
+const routes = require("./routes/user.routes.js");
 
 const app = express();
 
@@ -12,20 +12,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
-
 dotenv.config();
 
-app.use(todoRoutes);
+// Connecting to the database
+require("./dbConnection");
 
-//Set up mongodb connection wih mongoose
-import mongoose from "mongoose";
-
-main().catch((err) => console.log(err));
-
-async function main() {
-  await mongoose.connect(process.env.DB_URI);
-  console.log("Connected To Database");
-}
+app.use(routes);
 
 app.listen(port, () =>
   console.log(`Express Server is Running at http://localhost:${port}`)
