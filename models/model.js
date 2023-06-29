@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const dataSchema = mongoose.Schema({
   name: String,
 });
 
-var Data = mongoose.model("<collection_name>", dataSchema);
+var Data = mongoose.model("<data_collection>", dataSchema);
 
-export default Data;
+module.exports = Data;

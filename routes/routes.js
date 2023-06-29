@@ -1,26 +1,27 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import {
+const {
   getAll,
   getById,
   createNew,
   updateOne,
   deleteOne,
-} from "../controllers/controller.js";
+} = require("../controllers/controller.js");
+const auth = require("../auth/auth.js");
 
 //get all data
-router.get("/", getAll);
+router.get("/all", auth.authenticateToken, getAll);
 
 //get data by id
-router.get("/:id", getById)
+router.get("/all/:id", auth.authenticateToken, getById);
 
 //create new
-router.post("/", createNew);
+router.post("/create", auth.authenticateToken, createNew);
 
 //update
-router.patch("/:id", updateOne);
+router.patch("/update/:id", auth.authenticateToken, updateOne);
 
 //delete
-router.delete("/:id", deleteOne);
+router.delete("/delete/:id", auth.authenticateToken, deleteOne);
 
-export default router;
+module.exports = router;

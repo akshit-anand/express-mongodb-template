@@ -1,36 +1,58 @@
-import Data from "../models/model.js";
+const Data = require("../models/model.js");
 
 //get all data
-export const getAll = (req, res) => {
-  Data.find().then((data) => res.send(data));
+const getAll = async (req, res) => {
+  try {
+    await Data.find().then((data) => res.send(data));
+  } catch (err) {
+    res.send(err);
+  }
 };
 
 //get data by id
-export const getById = (req, res) => {
-  const id = req.params.id;
-  Data.findById(id).then((data) => res.send(data));
-}
+const getById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await Data.findById(id).then((data) => res.send(data));
+  } catch (err) {
+    res.send(err);
+  }
+};
 
 //create new data
-export const createNew = (req, res) => {
-  const newData = new Data({
-    name: req.body.name,
-  });
-  newData.save(newData).then((data) => res.send(data));
+const createNew = async (req, res) => {
+  try {
+    const newData = new Data({
+      name: req.body.name,
+    });
+    await newData.save(newData).then((data) => res.send(data));
+  } catch (error) {
+    res.send(err);
+  }
 };
 
 //update by id
-export const updateOne = (req, res) => {
-  const id = req.params.id;
-  Data.findByIdAndUpdate(id, {
-    name: req.body.name,
-  }).then((data) => res.send(data));
+const updateOne = (req, res) => {
+  try {
+    const id = req.params.id;
+    Data.findByIdAndUpdate(id, {
+      name: req.body.name,
+    }).then((data) => res.send(data));
+  } catch (error) {
+    res.send(err);
+  }
 };
 
 //delete by id
-export const deleteOne = (req, res) => {
-  const id = req.params.id;
-  Data.findByIdAndDelete(id)
-    .then((data) => res.send({ message: "Data was deleted successfully" }))
-    .catch((error) => res.send({ message: "Data was not deleted" }));
+const deleteOne = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await Data.findByIdAndDelete(id)
+      .then((data) => res.send({ message: "Data was deleted successfully" }))
+      .catch((error) => res.send({ message: "Data was not deleted" }));
+  } catch (error) {
+    res.send(err);
+  }
 };
+
+module.exports = { getAll, getById, createNew, updateOne, deleteOne };
