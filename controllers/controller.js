@@ -47,11 +47,11 @@ const updateOne = (req, res) => {
 const deleteOne = async (req, res) => {
   try {
     const id = req.params.id;
-    await Data.findByIdAndDelete(id)
-      .then((data) => res.send({ message: "Data was deleted successfully" }))
-      .catch((error) => res.send({ message: "Data was not deleted" }));
+    await Data.findByIdAndDelete(id).then((data) =>
+      res.send({ message: "Data was deleted successfully" })
+    );
   } catch (error) {
-    res.send(err);
+    res.send({ message: "Data was not deleted" }, error);
   }
 };
 
